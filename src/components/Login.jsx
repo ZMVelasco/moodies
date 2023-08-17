@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
 import { supabase } from '../supabase/supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         setError('');
@@ -36,7 +38,7 @@ const Login = () => {
             const { error } = await supabase.auth.signInWithOtp({
                 email: email,
                 options: {
-                    emailRedirectTo: 'https://example.com/welcome', // Replace with your redirect URL
+                    emailRedirectTo: 'https://moodies-eight.vercel.app/dashboard', 
                 },
             });
 
@@ -44,7 +46,7 @@ const Login = () => {
                 setError(error.message);
             } else {
                 console.log('Magic link sent successfully');
-                // You can provide user feedback here, e.g., show a message
+            navigate('/dashboard');
             }
         } catch (error) {
             setError(error.message);
