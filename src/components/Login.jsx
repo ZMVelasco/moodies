@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container, Box, TextField, Button, Typography } from "@mui/material";
 import { supabase } from '../supabase/supabaseClient';
+import googleIcon from '../assets/google-icon.svg';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,15 +10,15 @@ const Login = () => {
 
     const handleLogin = async () => {
         setError('');
-    
+
         try {
             const response = await supabase.auth.signInWithPassword({
                 email: email,
                 password: password,
             });
-    
+
             console.log('Login response:', response);
-    
+
             if (response.error) {
                 setError(response.error.message);
             } else {
@@ -49,6 +50,9 @@ const Login = () => {
                 />
                 <Button variant="contained" color="primary" onClick={handleLogin}>
                     Login
+                </Button>
+                <Button variant="contained" startIcon={<img src={googleIcon} alt="Google Icon" />} onClick={() => supabase.auth.signIn({ provider: 'google' })}>
+                    Log in with Google
                 </Button>
                 {error && (
                     <Typography color="error" variant="body1">
