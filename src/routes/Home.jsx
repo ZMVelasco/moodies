@@ -1,5 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
+import Login from '../components/Login';
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -32,6 +33,7 @@ const Register = () => {
 
     return (
         <>
+            <Login />
             <Box
                 component="form"
                 onSubmit={onSubmit}
