@@ -40,7 +40,7 @@ const Login = () => {
                 email: email,
                 options: {
                     //FIXME: Not redirecting to the right website
-                    emailRedirectTo: 'https://moodies-eight.vercel.app/dashboard', 
+                    emailRedirectTo: 'https://www.google.com/', 
                 },
             });
 
