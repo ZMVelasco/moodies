@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Box, TextField, Button, Typography } from "@mui/material";
+import { Container, Box, TextField, Button, Typography, Tab, Tabs } from '@mui/material';
 import { supabase } from '../supabase/supabaseClient';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [activeTab, setActiveTab] = useState(0);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -38,7 +39,8 @@ const Login = () => {
             const { error } = await supabase.auth.signInWithOtp({
                 email: email,
                 options: {
-                    emailRedirectTo: 'https://moodies-eight.vercel.app/dashboard', 
+                    //FIXME: Not redirecting to the right website
+                    emailRedirectTo: 'https://www.google.com/', 
                 },
             });
 
@@ -54,35 +56,54 @@ const Login = () => {
     };
 
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth='sm'>
             <Box mt={5}>
-                <TextField
-                    label="Email"
-                    fullWidth
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    margin="normal"
-                />
-                <TextField
-                    label="Password"
-                    type="password"
-                    fullWidth
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    margin="normal"
-                />
-                <Button variant="contained" color="primary" onClick={handleLogin}>
-                    Login
-                </Button>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleMagicLinkLogin}
-                >
-                    Log in with Magic Link
-                </Button>
+                <Tabs value={activeTab} onChange={(event, newValue) => setActiveTab(newValue)}>
+                    <Tab label='Login with Password' />
+                    <Tab label='Login with OTP' />
+                </Tabs>
+                {activeTab === 0 && (
+                    <div>
+                        <TextField
+                            label='Email'
+                            fullWidth
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            margin='normal'
+                        />
+                        <TextField
+                            label='Password'
+                            type='password'
+                            fullWidth
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            margin='normal'
+                        />
+                        <Button variant='contained' color='primary' onClick={handleLogin}>
+                            Login
+                        </Button>
+                    </div>
+                )}
+                {activeTab === 1 && (
+                    <div>
+                        <TextField
+                            label='Email'
+                            fullWidth
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            margin='normal'
+                        />
+                        <Button
+                            variant='contained'
+                            color='secondary'
+                            onClick={handleMagicLinkLogin}
+                        >
+                            Log in with Magic Link
+                        </Button>
+                    </div>
+                )}
                 {error && (
-                    <Typography color="error" variant="body1">
+                    <Typography color='error' variant='body1'>
                         {error}
                     </Typography>
                 )}
