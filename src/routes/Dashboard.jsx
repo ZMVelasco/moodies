@@ -1,12 +1,12 @@
 import MoodSelector from "../components/MoodSelect"
-import LogoutButton from "../components/LogOutButton"
+import LogOutBtn from "../components/LogOutBtn"
 
 const Dashboard = () => {
     return (
         <>
             <div>Dashboard</div>
             <MoodSelector />
-            <LogoutButton />
+            <LogOutBtn />
         </>
     )
 }

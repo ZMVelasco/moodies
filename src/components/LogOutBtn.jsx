@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { supabase } from '../supabase/supabaseClient'; 
 
-const LogoutButton = () => {
+const LogOutBtn = () => {
     const handleLogout = async () => {
         try {
             const { error } = await supabase.auth.signOut();
@@ -22,4 +22,4 @@ const LogoutButton = () => {
     );
 };
 
-export default LogoutButton;
+export default LogOutBtn;
